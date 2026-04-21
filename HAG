@@ -3,32 +3,57 @@
 Servo servo1;
 Servo servo2;
 
+// Buttons
 int button1 = 2;
 int button2 = 4;
+int button3 = 7;   // controls LED 9
+int button4 = 8;   // controls LED 10
+int button5 = 12;  // controls LED 11
+
+// LEDs
+int led1 = 9;
+int led2 = 10;
+int led3 = 11;
 
 void setup() {
-  servo1.attach(9);
-  servo2.attach(10);
+  servo1.attach(3);
+  servo2.attach(5);
 
   pinMode(button1, INPUT_PULLUP);
   pinMode(button2, INPUT_PULLUP);
+  pinMode(button3, INPUT_PULLUP);
+  pinMode(button4, INPUT_PULLUP);
+  pinMode(button5, INPUT_PULLUP);
+
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+  pinMode(led3, OUTPUT);
 }
 
 void loop() {
   int state1 = digitalRead(button1);
   int state2 = digitalRead(button2);
+  int state3 = digitalRead(button3);
+  int state4 = digitalRead(button4);
+  int state5 = digitalRead(button5);
 
-  // Servo 1 (button on pin 2)
+  // Servo 1
   if (state1 == LOW) {
     servo1.write(90);
   } else {
     servo1.write(0);
   }
 
-  // Servo 2 (button on pin 4)
+  // Servo 2
   if (state2 == LOW) {
     servo2.write(90);
   } else {
     servo2.write(0);
   }
+
+// LEDs (reversed behavior)
+digitalWrite(led1, state3 == LOW ? LOW : HIGH);
+digitalWrite(led2, state4 == LOW ? LOW : HIGH);
+digitalWrite(led3, state5 == LOW ? LOW : HIGH);
+}
 }
